@@ -12,7 +12,8 @@
 body * {
 
     font-family: IRANSans;
-    background-color:#21c085 !important
+    background-color:#e2e6e4 !important;
+    overflow-x: hidden; /* Hide horizontal scrollbar */
 }
 
 .navheader {
@@ -23,7 +24,7 @@ body * {
     font-style: normal !important;
     font-weight: 700 !important;
     font-size: 14px !important;
-    color: #3c557a !important;
+    color: #fdfeff !important;
 
 
 
@@ -31,7 +32,7 @@ body * {
 
 #dropdown-basic-button {
 
-    background: #506688;
+    /* background: #506688; */
     margin-left: 0px;
 }
 
@@ -201,7 +202,7 @@ body * {
         font-style: normal !important;
         font-weight: 500 !important;
         font-size: 25px;
-        color: #19212c !important;
+        color: #ecf0f5 !important;
     }
     .button-component {
         width: 209px;
@@ -213,4 +214,14 @@ body * {
         align-items: center;
         background-color: #21C085;
         cursor: pointer;
+    }
+.textt{
+ 
+        color: white;
+        text-align: center;
+        margin: 1px;
+        font-family: "Poppins" !important;
+        font-style: normal !important;
+        font-weight: 600 !important;
+        font-size: 16px;
     }
