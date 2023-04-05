@@ -4,12 +4,8 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
-import { useContext } from 'react';
-import { MapContext } from '../context/MapContext';
-import { RemoveScroll } from 'react-remove-scroll';
+
 
 
 const SecondPage = () => {
@@ -25,7 +21,6 @@ const SecondPage = () => {
                         <img
                             src={require("../assets/touba.png")}
                             className="d-block  mt-2 mb-2"
-
                         />
                     </Col>
                 </Row>
@@ -33,7 +28,6 @@ const SecondPage = () => {
                 <Row>
                     <Col sm={12} md={3} lg={3} style={{ backgroundColor: "#3c557a", margin: "1%" }} className="rounded ">
                         <Row className="mt-3 mb-1" ><h3 style={{ color: "white" }}>Operating Costs</h3></Row>
-
                         <Row>
                             <Col sm={12}>  <div style={{ height: "1px", width: "95%", backgroundColor: "gray" }}></div></Col>
                         </Row>
@@ -191,9 +185,7 @@ const SecondPage = () => {
                         </Form>
                     </Col>
                     <Col sm={12} md={3} lg={3} style={{ backgroundColor: "#3c557a", margin: "1%" }} className="rounded">
-
                         <Row className="mt-3 mb-1" ><h3 style={{ color: "white" }}>Fixed Costs</h3></Row>
-
                         <Row>
                             <Col sm={12}>  <div style={{ height: "1px", width: "95%", backgroundColor: "gray" }}></div></Col>
                         </Row>
@@ -288,11 +280,9 @@ const SecondPage = () => {
                                     </Col>
                                 </Row>
                             </Form.Group>
-
                         </Form>
                         <div style={{ height: "1px", width: "100%", backgroundColor: "gray" }}></div>
                         <Row className="mt-3 mb-1" ><h5 style={{ color: "white" }}>Expected Production & Price</h5></Row>
-
                         <Row>
                             <Col sm={12}>  <div style={{ height: "1px", width: "100%", backgroundColor: "gray" }}></div></Col>
                         </Row>
@@ -362,13 +352,10 @@ const SecondPage = () => {
                         <Button variant="success" type="button" style={{ width: "100%" }} className="mt-3" onClick={dsmartpage}>
                             BACK
                         </Button>
-                      
                     </Col>
                 </Row>
-
             </Container>
         </>
     );
 };
-
 export default SecondPage;

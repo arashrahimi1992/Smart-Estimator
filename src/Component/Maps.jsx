@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "leaflet.heat";
@@ -8,21 +8,20 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useParams } from "react-router-dom";
-import Spinner from "./Spinner";
 import { Button, Container } from 'react-bootstrap';
 
 
 
 const Maps = ({ fetch }) => {
-  const { setFetch, crops, setCrops, getData, setLang, setLat, lat, lang, sendData } = useContext(MapContext)
+  const {setCrops,setLang, setLat, lat, lang, sendData } = useContext(MapContext)
   useEffect(() => {
     var map = L.map("map", { zoomControl: false }).setView([56.342330657261556, -99.30158029022198], 5);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-    var x = map.getBounds()
-    console.log(x)
+    // var x = map.getBounds()
+    // console.log(x)
     let points = fetch
       ? fetch.map((p) => {
         return [p[0], p[1], p[2]];
@@ -59,32 +58,21 @@ const Maps = ({ fetch }) => {
           .openOn(map);
       }
     });
-    map.on('zoom', () => {
-      var x = map.getBounds()
-      console.log(x)
-    })
+    // map.on('zoom', () => {
+    //   var x = map.getBounds()
+    //   console.log(x)
+    // })
     return () => {
       map.remove();
 
     };
   }, [fetch]);
   const email = useParams()
-  console.log(email
-  )
-  // useEffect(()=>{
-  //   var map = L.map("map", { zoomControl: false }).setView([56.342330657261556, -99.30158029022198],5);
-  //   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  //     attribution:
-  //       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  //   }).addTo(map);
-  //   const x= map.getBounds()
-  // console.log(x)
-
-  // },[])
+  // console.log(email
+  // )
   return (
     <>
       <Row  >
-
         <Col sm={3} className='pt-2 pe-2 pb-2'>
           <Form.Select aria-label="location" onChange={(e) => { setCrops(e.currentTarget.value) }} size="lg"  >
             <option >Choose crops</option>
@@ -129,14 +117,11 @@ const Maps = ({ fetch }) => {
           <Button variant="secondary" type="submit" onClick={sendData} size="lg" style={{ width: "100%", backgroundColor: "#21c085", height: "50px" }} disabled={lat === ""} >
             {lat ? "submit" : <h6 className='mt-1'>
               click on your location on the map
-
             </h6>}
-
           </Button>
         </Col>
       </Row>
       <Row>
-
         <Col sm={12}>
           <div id="map" style={{ height: "100vh", marginTop: "10px", width: "100%" }} className="border border-primary" ></div>
         </Col>
