@@ -3,20 +3,12 @@ import './App.css';
 import { Route, Routes } from "react-router-dom";
 import Maps from './Component/Maps';
 import axios from "axios";
-import { addressPoints } from "./addressPoints";
 import { MapContext } from './context/MapContext'
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { Button, Container } from 'react-bootstrap';
 import { useNavigate, Link } from "react-router-dom";
-import Spinner from './Component/Spinner';
-import { RemoveScroll } from 'react-remove-scroll';
-import useHistory from 'react-router-dom'
-import { useParams } from 'react-router-dom';
 import Smart from './Component/Smart'
 import { ToastContainer, toast } from 'react-toastify';
 import SecondPage from './Component/SecondPage'
+
 
 
 
@@ -27,11 +19,36 @@ const App = () => {
   const [lang, setLang] = useState("");
   const [email, setEmail] = useState("")
   const [loading, setLoading] = useState(true)
-  const navigate = useNavigate();
-
+  const [area, setArea] = useState()
+  const [mainCategory, setMainCategory] = useState("")
+  const [mainCatt, setMainCatt] = useState("")
+  const [percentage, setPercentage] = useState("")
   const [confirm, setConfirm] = useState(false)
   const [dthirdpart, setDthirdpart] = useState(false)
+  const [selectedUnit, setSelectedUnit] = useState('Acre');
+  const [dataKinds, setDataKinds] = useState("")
+  const[thirdPart,setThirdPart]=useState('')
+  const[profit,setProfit] = useState('')
+  const[dataExtracFrom,setDataExtracFrom]=useState('')
+  const[selectedSubcrop,setselectedSubcrop]=useState('')
+  const[fixCost,setFixCost]=useState('')
+  const[yieldPrice,setyieldPrice]=useState('')
+  const[revenue,setRevenue]=useState('')
+  const[opCost,setOpCost]=useState('')  
+  const[selectSucat,setSelectSucat]=useState('')
+  const navigate = useNavigate();
 
+
+  const notify = () => toast.error('Please enter all requested items!', {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+  });;
   useEffect(() => {
     const getdata = async () => {
       try {
@@ -49,42 +66,98 @@ const App = () => {
   const sendData = async () => {
     try {
 
-      // var url = window.location.href;
-      // var params = `?long=${lang}&lat=${lat}`;
-      // var newUrl = url + params;
-
-      // // Redirect to the new URL
-      // window.location.href = newUrl;
-      // console.log(url)
-
-      // const data =
-      // {
-      //   "latitude": lat,
-      //   "longitude": lang
-      // }
-      // const res = await axios.post('https://localhost:7222/api/Langlats', data)
-      //       if (res) {
-
-      //  var url = window.location.href;
-      //       var params = `?long=${lang}&lat=${lat}`;
-      //       var newUrl = url + params;
-
-      //       Redirect to the new URL
-      //       window.location.href = "/smart";
-      //         redirectToExternalUrl()
-
-
-      //       }
       navigate("/");
-
-
     } catch (error) {
       console.error('Error posting data: ', error);
     }
   }
-  // const Link=()=>{
-  //   navigate(`/map`);
-  // }
+
+  const createEmail = async (body) => {
+    try {
+      console.log(body)
+      const res = await axios.post("http://82.115.18.58:3000/user_email/", body)
+      console.log(res)
+      navigate("/maps");
+
+    } catch (error) {
+      alert(error.message)
+    }
+  }
+
+  const mainCat = async () => {
+
+
+    try {
+
+      const body = {
+        "email": email,
+        "latitude": Number(lat),
+        "longitude": Number(lang),
+        "area": Number(area),
+        "area_unit": selectedUnit
+      }
+      console.log(body)
+      if (lat != "" && lang != "", email != "", area != "") {
+        const { data } = await axios.post("http://82.115.18.58:3000/main_cat_crops", body)
+        setMainCategory(data)
+        setConfirm(true)
+      }
+
+    } catch (error) {
+      notify()
+
+    }
+
+  }
+  const subcatCrops = async () => {
+
+
+    try {
+
+      const body = {
+        "main_cat": mainCatt,
+      }
+        const {data} = await axios.post("http://82.115.18.58:3000/subcat_crops", body)
+        setDataKinds(data)
+        setThirdPart(true)
+       
+    } catch (error) {
+      notify()
+
+    }
+
+  }
+  const getProfit = async () => {
+
+
+    try {
+
+      const body = {
+        "email": email,
+        "percentage":percentage,
+        "selected_subcrop":selectedSubcrop,
+        
+      }
+      console.log(body)
+        const {data} = await axios.post("http://82.115.18.58:3000/get_profit",body)
+       
+        setProfit(Object.entries(data.profit))
+        setOpCost(Object.entries(data.op_costs))
+        setFixCost(Object.entries(data.fixed_costs))
+        setyieldPrice(Object.entries(data.yield_price))
+        setRevenue(Object.entries(data.revenue))
+        setSelectSucat(data.selected_subcat_crop)
+        setDataExtracFrom(data.data_extracted_from)
+
+        setDthirdpart(true)
+
+       
+    } catch (error) {
+      notify()
+
+    }
+
+  }
   return (
     <>
       <MapContext.Provider value={{
@@ -102,7 +175,39 @@ const App = () => {
         confirm,
         setConfirm,
         dthirdpart,
-        setDthirdpart
+        setDthirdpart,
+        createEmail,
+        area,
+        setArea,
+        mainCat,
+        selectedUnit,
+        setSelectedUnit,
+        mainCategory,
+        setMainCategory,
+        mainCat,
+        mainCatt,
+        setMainCatt,
+        percentage,
+        setPercentage,
+        subcatCrops,
+        setThirdPart,
+        thirdPart,
+        dataKinds,
+        setDataKinds,
+        setselectedSubcrop,
+        selectedSubcrop,
+        getProfit,
+        setProfit,
+        profit,
+        dataExtracFrom,
+        opCost,
+        fixCost,
+        yieldPrice,
+        revenue,
+        selectSucat
+
+
+
       }} >
         <Routes>
           {loading ?

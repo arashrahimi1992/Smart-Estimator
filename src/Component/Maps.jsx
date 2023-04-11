@@ -96,7 +96,7 @@ const Maps = ({ fetch }) => {
             <option value="soybeans" name="soybeans">soybeans</option>
             <option value="sunflowers" name="sunflowers">sunflowers</option>
             <option value="switchgrass" name="switchgrass">switchgrass</option>
-            <option value="wheat" name="wheat">wheat</option>
+            <option value="wheat" name="wheat">wheat</option> 
           </Form.Select>
         </Col>
         <Col sm={3} className='pt-2 pe-2'>
