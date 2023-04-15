@@ -32,13 +32,19 @@ const App = () => {
   const[dataExtracFrom,setDataExtracFrom]=useState('')
   const[selectedSubcrop,setselectedSubcrop]=useState('')
   const[fixCost,setFixCost]=useState('')
+  const[fixtCostb,setFixtCostb]=useState('')
   const[yieldPrice,setyieldPrice]=useState('')
+  const[yieldPriceb,setyieldPriceb]=useState('')
   const[revenue,setRevenue]=useState('')
-  const[opCost,setOpCost]=useState('')  
+  const[revenueb,setRevenueb]=useState('')
+  const[opCost,setOpCost]=useState('')
+  const[opCostb,setOpCostb]=useState('')    
   const[selectSucat,setSelectSucat]=useState('')
+  const[token,setToken]=useState("")
+  const[agriType,setAgriType]=useState('')
+  
   const navigate = useNavigate();
-
-
+ 
   const notify = () => toast.error('Please enter all requested items!', {
     position: "top-center",
     autoClose: 5000,
@@ -48,7 +54,25 @@ const App = () => {
     draggable: true,
     progress: undefined,
     theme: "colored",
-  });;
+  });
+  useEffect(() => {
+    const getToken = async () => {
+      try {
+        const formData = new FormData();
+        formData.append("username", 'admin');
+        formData.append("password", 'Tiva@2022#Ca');
+        const { data } = await axios.post(`http://82.115.18.58:8005/token`,formData,{
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        setToken(data)
+      } catch (error) {
+        console.log(error.message)
+      }
+    }
+    getToken()
+  }, [])
   useEffect(() => {
     const getdata = async () => {
       try {
@@ -62,33 +86,34 @@ const App = () => {
     }
     getdata()
   }, [crops])
+  
   //senddata
   const sendData = async () => {
     try {
-
       navigate("/");
     } catch (error) {
       console.error('Error posting data: ', error);
     }
   }
-
   const createEmail = async (body) => {
     try {
-      console.log(body)
-      const res = await axios.post("http://82.115.18.58:3000/user_email/", body)
+      console.log(token)
+      const res = await axios.post("http://82.115.18.58:3000/user_email/", body,{
+        headers: {
+          'Authorization': `Bearer ${token.token}`
+        }
+      })
+     
+     
       console.log(res)
       navigate("/maps");
 
     } catch (error) {
-      alert(error.message)
+      alert("error.message")
     }
   }
-
   const mainCat = async () => {
-
-
     try {
-
       const body = {
         "email": email,
         "latitude": Number(lat),
@@ -96,42 +121,39 @@ const App = () => {
         "area": Number(area),
         "area_unit": selectedUnit
       }
-      console.log(body)
       if (lat != "" && lang != "", email != "", area != "") {
-        const { data } = await axios.post("http://82.115.18.58:3000/main_cat_crops", body)
+        const { data } = await axios.post("http://82.115.18.58:3000/main_cat_crops", body,{
+          headers: {
+            'Authorization': `Bearer ${token.token}`
+          }
+        })
         setMainCategory(data)
         setConfirm(true)
       }
-
     } catch (error) {
       notify()
-
     }
-
   }
   const subcatCrops = async () => {
-
-
     try {
-
       const body = {
         "main_cat": mainCatt,
       }
-        const {data} = await axios.post("http://82.115.18.58:3000/subcat_crops", body)
+        const {data} = await axios.post("http://82.115.18.58:3000/subcat_crops", body,{
+          headers: {
+            'Authorization': `Bearer ${token.token}`
+          }
+        })
         setDataKinds(data)
         setThirdPart(true)
        
     } catch (error) {
       notify()
-
     }
 
   }
   const getProfit = async () => {
-
-
     try {
-
       const body = {
         "email": email,
         "percentage":percentage,
@@ -139,25 +161,31 @@ const App = () => {
         
       }
       console.log(body)
-        const {data} = await axios.post("http://82.115.18.58:3000/get_profit",body)
-       
+        const {data} = await axios.post("http://82.115.18.58:3000/get_profit",body,{
+          headers: {
+            'Authorization': `Bearer ${token.token}`
+          }
+        })
         setProfit(Object.entries(data.profit))
         setOpCost(Object.entries(data.op_costs))
+        setOpCostb(data.op_costs)
         setFixCost(Object.entries(data.fixed_costs))
+        setFixtCostb(data.fixed_costs)
         setyieldPrice(Object.entries(data.yield_price))
+        setyieldPriceb(data.yield_price)
         setRevenue(Object.entries(data.revenue))
+        setRevenueb(data.revenue)
         setSelectSucat(data.selected_subcat_crop)
         setDataExtracFrom(data.data_extracted_from)
-
+        setAgriType(data.agri_type)
+     
+        
         setDthirdpart(true)
-
-       
     } catch (error) {
       notify()
-
     }
-
   }
+
   return (
     <>
       <MapContext.Provider value={{
@@ -204,10 +232,18 @@ const App = () => {
         fixCost,
         yieldPrice,
         revenue,
-        selectSucat
-
-
-
+        selectSucat,
+        setFixCost,
+        opCostb,
+        setOpCostb,
+        fixtCostb,
+        yieldPriceb,
+        revenueb,
+        selectSucat,
+        email,
+        agriType,
+        token,
+        setRevenue
       }} >
         <Routes>
           {loading ?

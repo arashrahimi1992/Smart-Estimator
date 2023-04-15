@@ -1,7 +1,7 @@
 import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
+
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { toast } from 'react-toastify';
@@ -16,7 +16,7 @@ import Tabs from 'react-bootstrap/Tabs';
 const Smart = () => {
     const { email, setEmail, setLat, lat, lang, setLang, confirm, setConfirm, dthirdpart, setDthirdpart, createEmail, area, setArea,
         mainCat, selectedUnit, setSelectedUnit, setMainCategory, mainCategory, mainCatt, subcatCrops,
-        setMainCatt, setPercentage, percentage, dataKinds, setDataKinds, setThirdPart, thirdPart, selectedSubcrop, setselectedSubcrop,getProfit,profit,setProfit,dataExtracFrom,opCost } = useContext(MapContext)
+        setMainCatt, setPercentage, percentage, dataKinds, setDataKinds, setThirdPart, thirdPart, selectedSubcrop, setselectedSubcrop,getProfit,profit,setProfit,dataExtracFrom,opCost,setRevenue } = useContext(MapContext)
     const navigate = useNavigate();
     const direct = () => {
         const notify = () => toast.error(' plese enter your email address!', {
@@ -44,20 +44,11 @@ const Smart = () => {
         setSelectedUnit(event.target.value);
     };
 
-
+//اندازه دکمه هاو تب
     return (
-        <Container>
+        <>
             <Row>
-                <Col sm={2} md={2} lg={2}>
-                    <img
-                        src={require("../assets/touba.png")}
-                        className="d-block  mt-2 mb-2"
-                    />
-                </Col>
-            </Row>
-            <div style={{ height: "1px", width: "95%", backgroundColor: "gray" }}></div>
-            <Row>
-                <Col sm={12} md={3} lg={3} style={{ backgroundColor: "#3c557a", margin: "1%" }} className="rounded ">
+                <Col sm={12} md={4} lg={4} style={{ backgroundColor: "#3c557a", margin: "1%" }} className="rounded ">
                     <Row className="mt-3 " ><span style={{ color: "white" }}>1. Enter your farm field</span><br /><span style={{ color: "white" }}>information:</span></Row>
                     <div style={{ height: "1px", width: "95%", backgroundColor: "gray" }}></div>
                     <Form>
@@ -65,7 +56,7 @@ const Smart = () => {
                             <Form.Label style={{ color: "white" }}>Email:</Form.Label>
                             <Form.Control type="email" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)} value={email} name='email' />
                         </Form.Group>
-                        <Button variant="success" type="button" style={{ width: "100%" }} onClick={direct} placeholder={email ? email : "Enter your email"}    >
+                        <Button variant="success" type="button" style={{ width: "50%" }} onClick={direct} placeholder={email ? email : "Enter your email"}    >
                             Find location
                         </Button>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -105,8 +96,12 @@ const Smart = () => {
                             </Col>
                         </Row>
                     </Form>
-                    {
-                        confirm ? (<Row className="border border-white mb-3">
+                    
+                </Col>
+                <Col sm={12} md={4} lg={4} style={{ backgroundColor: "#3c557a", margin: "1%" }} className="rounded">
+                    <Row className="mt-3 mb-1" ><h3 style={{ color: "white" }}>province {mainCategory.province}</h3></Row>
+                 
+                      <Row className="border border-white mb-3">
                             <Col sm={12}><span style={{ color: "white" }}>2. Select one of the crops which are recommended based on the soil of the field:</span></Col>
                             <Col sm={12}>  <div style={{ height: "1px", width: "95%", backgroundColor: "gray" }}></div></Col>
                             <Col sm={12}>
@@ -120,18 +115,18 @@ const Smart = () => {
                                         <Form.Select aria-label="location" size="lg" onChange={(e) => { setMainCatt(e.currentTarget.value) }}  >
                                             <option >-</option>
 
-                                            {mainCategory.best_options.map((list, index) => (
+                                            {mainCategory?  mainCategory.best_options.map((list, index) => (
                                                 <option value={list} name="list" >{list}</option>
-                                            ))}
+                                            )):""}
                                         </Form.Select>
 
                                     </Tab>
                                     <Tab eventKey="profile" title="Possible_Options">
                                         <Form.Select aria-label="location" size="lg" onChange={(e) => { setMainCatt(e.currentTarget.value) }}  >
                                             <option >-</option>
-                                            {mainCategory.possible_options.map((list, index) => (
+                                            {mainCategory?  mainCategory.possible_options.map((list, index) => (
                                                 <option value={list} name="list" >{list}</option>
-                                            ))}
+                                            )):""}
                                         </Form.Select>
                                     </Tab>
                                 </Tabs>
@@ -139,12 +134,9 @@ const Smart = () => {
                                     Apply
                                 </Button>
                             </Col>
-                        </Row>) : ("")
-                    }
-                </Col>
-                <Col sm={12} md={3} lg={3} style={{ backgroundColor: "#3c557a", margin: "1%" }} className="rounded">
-                    <Row className="mt-3 mb-1" ><h3 style={{ color: "white" }}>province {mainCategory.province}</h3></Row>
-                    {thirdPart ? (
+                        </Row>
+                
+              
                         <Row>
                             <Col sm={12}><span style={{ color: "white" }}>3. Enter the percentage of field for the considered crop from the following list:</span></Col>
                             <Col sm={12}>  <div style={{ height: "1px", width: "95%", backgroundColor: "gray" }}></div></Col>
@@ -160,9 +152,9 @@ const Smart = () => {
                                     <option >-</option>
 
 
-                                    {dataKinds.kinds.map((list, index) => (
+                                    {dataKinds? dataKinds.kinds.map((list, index) => (
                                         <option value={list} name="list" >{list}</option>
-                                    ))}
+                                    )):""}
                                 </Form.Select>
 
 
@@ -173,11 +165,29 @@ const Smart = () => {
                                 </Button>
                             </Col>
                         </Row>
-                    ) : ("")}
+                   
                 </Col>
                 {
-                    dthirdpart ?
-                        (<Col sm={12} md={3} lg={3} style={{ backgroundColor: "#21c085", margin: "1%" }} className="rounded">
+                   
+                        <Col sm={12} md={3} lg={3} style={{ backgroundColor: "#21c085", margin: "1%" }} className="rounded">
+                            <Row> <Col sm={12}><span className="d-flex justify-content-center" style={{ color: "black", fontSize: "20px" }}>Agribusiness<br /> Estimations in <br />{dataExtracFrom}</span></Col></Row>
+                            <Col sm={12}>  <div style={{ height: "1px", width: "95%", backgroundColor: "gray" }}></div></Col>
+                            {
+                              profit?  profit.map(entry => (
+                                    <div key={entry[0]}>
+                                        <Row> <Col sm={12}><span className="d-flex justify-content-center" style={{ color: "white", fontSize: "20px" }} value={entry[0]}>{entry[0]}</span></Col></Row>
+                                    <Row> <Col sm={12}><span className="d-flex justify-content-center" style={{ color: "black", fontSize: "20px" }}>{entry[1]}</span></Col></Row>
+                                    <Col sm={12}>  <div style={{ height: "1px", width: "95%", backgroundColor: "gray" }}></div></Col>
+                                  
+                                    </div>
+                                )):""
+                            }
+                             <Button variant="success" type="button" style={{ width: "100%" }} onClick={dsecondpage} >
+                                customize
+                            </Button>
+                        </Col>
+                }
+                {/* <Col sm={12} md={3} lg={3} style={{ backgroundColor: "#21c085", margin: "1%" }} className="rounded">
                             <Row> <Col sm={12}><span className="d-flex justify-content-center" style={{ color: "black", fontSize: "20px" }}>Agribusiness<br /> Estimations in <br />{dataExtracFrom}</span></Col></Row>
                             <Col sm={12}>  <div style={{ height: "1px", width: "95%", backgroundColor: "gray" }}></div></Col>
                             {
@@ -192,10 +202,9 @@ const Smart = () => {
                             <Button variant="success" type="button" style={{ width: "100%" }} onClick={dsecondpage} >
                                 customize
                             </Button>
-                        </Col>) : ("")
-                }
+                        </Col> */}
             </Row>
-        </Container>
+        </>
     );
 };
 export default Smart;
