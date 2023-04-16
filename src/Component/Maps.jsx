@@ -9,6 +9,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useParams } from "react-router-dom";
 import { Button, Container } from 'react-bootstrap';
+import { Repeat } from "@mui/icons-material";
 
 
 
@@ -34,7 +35,8 @@ const Maps = ({ fetch }) => {
       max: 2,
       minOpacity: 5,
       blur: 10,
-      zoomControl: false
+      zoomControl: false,
+     
     };
     let heatLayer = L.heatLayer(points, options).addTo(map);
     points = ""
@@ -72,7 +74,7 @@ const Maps = ({ fetch }) => {
   // )
   return (
     <>
-      <Row  >
+      <Row style={{backgroundColor:"#3c557a"}} >
         <Col sm={3} className='pt-2 pe-2 pb-2'>
           <Form.Select aria-label="location" onChange={(e) => { setCrops(e.currentTarget.value) }} size="lg"  >
             <option >Choose crops</option>
@@ -121,7 +123,7 @@ const Maps = ({ fetch }) => {
           </Button>
         </Col>
       </Row>
-      <Row>
+      <Row style={{backgroundColor:"#3c557a"}}>
         <Col sm={12}>
           <div id="map" style={{ height: "100vh", marginTop: "10px", width: "100%" }} className="border border-primary" ></div>
         </Col>
