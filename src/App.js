@@ -131,7 +131,7 @@ const App = () => {
         setConfirm(true)
       }
     } catch (error) {
-      notify()
+      notify(error.message)
     }
   }
   const subcatCrops = async () => {
