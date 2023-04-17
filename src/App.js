@@ -116,11 +116,12 @@ const App = () => {
     try {
       const body = {
         "email": email,
-        "latitude": Number(lat),
-        "longitude": Number(lang),
+        "latitude": Number(((lat % 180) + 90) % 180 - 90),
+        "longitude": Number(((lang % 360) + 540) % 360 - 180),
         "area": Number(area),
         "area_unit": selectedUnit
       }
+      console.log(body)
       if (lat != "" && lang != "", email != "", area != "") {
         const { data } = await axios.post("http://82.115.18.58:3000/main_cat_crops", body,{
           headers: {

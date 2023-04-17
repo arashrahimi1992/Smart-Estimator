@@ -46,18 +46,15 @@ const SecondPage = () => {
     const handleInputChangeO = (event) => {
         const { name, value } = event.target;
         setFormValuesoc(prevState => ({ ...prevState, [name]: Number(value) }));
-
     };
     const handleInputChangeF = (event) => {
         const { name, value } = event.target;
         setFormValuesfc(prevState => ({ ...prevState, [name]: Number(value) }));
-
     };
     const handleInputChangeY = (event) => {
         const { name, value } = event.target;
         setFormValuesyp(prevState => ({ ...prevState, [name]: Number(value) }));
-    };
-    //تب بشود
+    }
     return (
         <>
             <Row>
@@ -86,7 +83,6 @@ const SecondPage = () => {
                                 </Container>
                             </Col>
                         </Tab>
-
                         <Tab eventKey="profile" title="Fixed Costs">
                             <Col sm={12} md={12} lg={12} style={{ backgroundColor: "#3c557a", margin: "1%" }} className="rounded">
                                 <Container>
@@ -133,9 +129,6 @@ const SecondPage = () => {
                         </Tab>
                     </Tabs>
                 </Col>
-
-
-
                 <Col sm={12} md={2} lg={2} className="rounded mt-2 ms-2 rounded" >
                     <Row>
                         <Col>
@@ -152,13 +145,10 @@ const SecondPage = () => {
                             <Col className="mb-1 d-flex justify-content-center rounded" sm={12}>
                                 <h3 style={{ color: "white", fontSize: "20px", backgroundColor: "#21c085" }}>{selectSucat}</h3>
                             </Col>
-
                         </Row>
-
                         <Row>
                             <Col sm={12}>  <div style={{ height: "1px", width: "100%", backgroundColor: "gray" }}></div></Col>
                         </Row>
-
                         <Row>
                             <Col sm={12}>  <div style={{ height: "1px", width: "100%", backgroundColor: "gray" }}></div></Col>
                         </Row>
@@ -172,29 +162,21 @@ const SecondPage = () => {
                                         <Col className="mb-1 d-flex justify-content-center" sm={12}>
                                             <h3 style={{ color: "white", fontSize: "20px", backgroundColor: "#21c085" }}>{entry[1]}</h3>
                                         </Col>
-
                                     </Row>
-
                                     <Row>
                                         <Col sm={12}>  <div style={{ height: "1px", width: "100%", backgroundColor: "gray" }}></div></Col>
                                     </Row>
                                 </div>
                             ))
                         }
-
                         <Col>
                             <Button variant="success" type="button" style={{ width: "100%", height: "45px" }} className="mb-2" onClick={dsmartpage}>
                                 BACK
                             </Button>
                         </Col>
-
-
                     </Row>
-
-
                 </Col>
             </Row>
-
         </>
     );
 };

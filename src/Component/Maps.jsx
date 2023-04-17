@@ -16,7 +16,8 @@ import { Repeat } from "@mui/icons-material";
 const Maps = ({ fetch }) => {
   const {setCrops,setLang, setLat, lat, lang, sendData } = useContext(MapContext)
   useEffect(() => {
-    var map = L.map("map", { zoomControl: false }).setView([56.342330657261556, -99.30158029022198], 5);
+   
+    var map = L.map("map", { zoomControl: false,worldCopyJump: false }).setView([56.342330657261556, -99.30158029022198], 5);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -36,6 +37,9 @@ const Maps = ({ fetch }) => {
       minOpacity: 5,
       blur: 10,
       zoomControl: false,
+      maxBounds: [[-45, -90], [45, 90]],
+      dragRotate: false
+   
      
     };
     let heatLayer = L.heatLayer(points, options).addTo(map);
