@@ -8,8 +8,8 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useParams } from "react-router-dom";
-import { Button, Container } from 'react-bootstrap';
-import { Repeat } from "@mui/icons-material";
+import { Button} from 'react-bootstrap';
+
 
 
 
@@ -22,25 +22,20 @@ const Maps = ({ fetch }) => {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-    // var x = map.getBounds()
-    // console.log(x)
     let points = fetch
       ? fetch.map((p) => {
         return [p[0], p[1], p[2]];
       })
       : [];
     const options = {
-      radius: 10, // radius of each data point in pixels
-      maxZoom: 1, // maximum zoom level at which the layer is displayed
-      // Add more options here
+      radius: 10,
+      maxZoom: 1, 
       max: 2,
       minOpacity: 5,
       blur: 10,
       zoomControl: false,
       maxBounds: [[-45, -90], [45, 90]],
       dragRotate: false
-   
-     
     };
     let heatLayer = L.heatLayer(points, options).addTo(map);
     points = ""
@@ -64,18 +59,10 @@ const Maps = ({ fetch }) => {
           .openOn(map);
       }
     });
-    // map.on('zoom', () => {
-    //   var x = map.getBounds()
-    //   console.log(x)
-    // })
     return () => {
       map.remove();
-
     };
   }, [fetch]);
-  const email = useParams()
-  // console.log(email
-  // )
   return (
     <>
       <Row style={{backgroundColor:"#3c557a"}} >

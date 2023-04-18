@@ -12,6 +12,7 @@ import SecondPage from './Component/SecondPage'
 
 
 
+
 const App = () => {
   const [fetch, setFetch] = useState([{}, {}])
   const [crops, setCrops] = useState("")
@@ -42,7 +43,7 @@ const App = () => {
   const[selectSucat,setSelectSucat]=useState('')
   const[token,setToken]=useState("")
   const[agriType,setAgriType]=useState('')
-  
+
   const navigate = useNavigate();
  
   const notify = () => toast.error('Please enter all requested items!', {
@@ -87,7 +88,6 @@ const App = () => {
     getdata()
   }, [crops])
   
-  //senddata
   const sendData = async () => {
     try {
       navigate("/");
@@ -103,9 +103,6 @@ const App = () => {
           'Authorization': `Bearer ${token.token}`
         }
       })
-     
-     
-      console.log(res)
       navigate("/maps");
 
     } catch (error) {
@@ -140,7 +137,7 @@ const App = () => {
       const body = {
         "main_cat": mainCatt,
       }
-        const {data} = await axios.post("http://82.115.18.58:3000/subcat_crops", body,{
+        const {data} = await axios.post("https://82.115.18.58:3000/subcat_crops", body,{
           headers: {
             'Authorization': `Bearer ${token.token}`
           }
@@ -179,73 +176,19 @@ const App = () => {
         setSelectSucat(data.selected_subcat_crop)
         setDataExtracFrom(data.data_extracted_from)
         setAgriType(data.agri_type)
-     
-        
         setDthirdpart(true)
     } catch (error) {
       notify()
     }
   }
-
   return (
     <>
-      <MapContext.Provider value={{
-        fetch,
-        setFetch,
-        crops,
-        setCrops,
-        setLat,
-        setLang,
-        lat,
-        lang,
-        sendData,
-        email,
-        setEmail,
-        confirm,
-        setConfirm,
-        dthirdpart,
-        setDthirdpart,
-        createEmail,
-        area,
-        setArea,
-        mainCat,
-        selectedUnit,
-        setSelectedUnit,
-        mainCategory,
-        setMainCategory,
-        mainCat,
-        mainCatt,
-        setMainCatt,
-        percentage,
-        setPercentage,
-        subcatCrops,
-        setThirdPart,
-        thirdPart,
-        dataKinds,
-        setDataKinds,
-        setselectedSubcrop,
-        selectedSubcrop,
-        getProfit,
-        setProfit,
-        profit,
-        dataExtracFrom,
-        opCost,
-        fixCost,
-        yieldPrice,
-        revenue,
-        selectSucat,
-        setFixCost,
-        opCostb,
-        setOpCostb,
-        fixtCostb,
-        yieldPriceb,
-        revenueb,
-        selectSucat,
-        email,
-        agriType,
-        token,
-        setRevenue
-      }} >
+      <MapContext.Provider value={{fetch,setFetch,crops,setCrops,setLat,setLang,lat,lang,sendData,email,setEmail,
+        confirm,setConfirm,dthirdpart,setDthirdpart,createEmail,area,setArea,mainCat,selectedUnit,setSelectedUnit,
+        mainCategory,setMainCategory,mainCat,mainCatt,setMainCatt,percentage,setPercentage,subcatCrops,setThirdPart,
+     thirdPart,dataKinds,setDataKinds,setselectedSubcrop,selectedSubcrop,getProfit,setProfit,profit,dataExtracFrom,
+        opCost,fixCost,yieldPrice,revenue,selectSucat,setFixCost,opCostb,setOpCostb,fixtCostb,yieldPriceb,revenueb,
+        selectSucat,email,agriType,token,setRevenue}} >
         <Routes>
           {loading ?
             <Route path='/maps' element={<Maps />}></Route> : <Route path="/" element={<Maps fetch={fetch} />} />
@@ -265,7 +208,6 @@ const App = () => {
           pauseOnHover
           theme="light"
         />
-        {/* Same as */}
         <ToastContainer />
       </MapContext.Provider>
     </>
