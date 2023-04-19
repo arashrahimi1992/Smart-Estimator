@@ -8,30 +8,35 @@ import { useState } from 'react'
 import Container from 'react-bootstrap/Container';
 
 const FixedCosts = () => {
-    const { fixCost, yieldPrice,fixtCostb, yieldPriceb} = useContext(MapContext)
-    const [formValuesfc, setFormValuesfc] = useState({ ...fixtCostb });
-    const [formValuesyp, setFormValuesyp] = useState({ ...yieldPriceb });
+    const { fixtCostb, yieldPriceb,setFixtCostb,setyieldPriceb} = useContext(MapContext)
+  
     const handleInputChangeF = (event) => {
         const { name, value } = event.target;
-        setFormValuesfc(prevState => ({ ...prevState, [name]: Number(value) }));
+        setFixtCostb(prevState => ({ ...prevState, [name]: Number(value) }));
     };
     const handleInputChangeY = (event) => {
         const { name, value } = event.target;
-        setFormValuesyp(prevState => ({ ...prevState, [name]: Number(value) }));
+        setyieldPriceb(prevState => ({ ...prevState, [name]: Number(value) }));
     }
     return (
         <>
             <Col sm={12} md={12} lg={12} style={{ backgroundColor: "#3c557a", margin: "1%" }} className="rounded">
                 <Container>
                     <Row>
-                        {fixCost.map((entry, index) => (
-                            <Col key={entry[0]} sm={4}>
-                                <Form.Group controlId={`form${entry[0]}`} onChange={handleInputChangeF} className='mt-2'>
-                                    <Form.Label style={{ color: "white" }}>{entry[0]}</Form.Label>
-                                    <Form.Control type="number" placeholder={entry[1]} name={entry[0]} />
-                                </Form.Group>
+                    {Object.keys(fixtCostb).map((key, index) => (
+                            <React.Fragment key={key}>
+                                <Col sm={4} className="mb-3">
+                                    <Form.Group onChange={handleInputChangeF}>
+                                        <Form.Label style={{ color: "white" }}>{key}</Form.Label>
+                                        <Form.Control
+                                            type="number"
+                                            value={fixtCostb[key]}
+                                            name={key}
+                                        />
+                                    </Form.Group>
+                                </Col>
                                 {(index + 1) % 3 === 0 && <div className="w-100"></div>}
-                            </Col>
+                            </React.Fragment>
                         ))}
                     </Row>
                 </Container>
@@ -42,23 +47,21 @@ const FixedCosts = () => {
                     </Row>
                     <Row>
                         <Form>
-                            {
-                                yieldPrice.map(entry => (
-
-                                    <div key={entry[0]}>
-                                        <Form.Group className="mb-3 mt-3" controlId="formBasicEmail" name={entry[0]} onChange={handleInputChangeY}>
-                                            <Row>
-                                                <Col sm={12} md={6}>
-                                                    <Form.Label style={{ color: "white" }} name={entry[0]} className='mt-2'>{entry[0]}</Form.Label>
-                                                </Col>
-                                                <Col sm={12} md={6}>
-                                                    <Form.Control type="number" placeholder={entry[1]} name={entry[0]} />
-                                                </Col>
-                                            </Row>
-                                        </Form.Group>
-                                    </div>
-                                ))
-                            }
+                        {Object.keys(yieldPriceb).map((key, index) => (
+                            <React.Fragment key={key}>
+                                <Col sm={4} className="mb-3">
+                                    <Form.Group onChange={handleInputChangeY}>
+                                        <Form.Label style={{ color: "white" }}>{key}</Form.Label>
+                                        <Form.Control
+                                            type="number"
+                                            value={yieldPriceb[key]}
+                                            name={key}
+                                        />
+                                    </Form.Group>
+                                </Col>
+                                {(index + 1) % 3 === 0 && <div className="w-100"></div>}
+                            </React.Fragment>
+                        ))}
                         </Form>
                     </Row>
                 </Container>

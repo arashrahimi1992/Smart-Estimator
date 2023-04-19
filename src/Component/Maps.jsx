@@ -9,6 +9,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useParams } from "react-router-dom";
 import { Button} from 'react-bootstrap';
+import Spinner from "./Spinner";
 
 
 
@@ -116,7 +117,9 @@ const Maps = ({ fetch }) => {
       </Row>
       <Row style={{backgroundColor:"#3c557a"}}>
         <Col sm={12}>
-          <div id="map" style={{ height: "100vh", marginTop: "10px", width: "100%" }} className="border border-primary" ></div>
+           <div id="map" style={{ height: "100vh", marginTop: "10px", width: "100%" }} className="border border-primary" ></div>
+          
+         
         </Col>
       </Row>
       <react-remove-scroll/>

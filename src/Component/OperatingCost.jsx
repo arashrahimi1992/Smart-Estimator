@@ -8,26 +8,42 @@ import { useState } from 'react'
 import Container from 'react-bootstrap/Container';
 
 const OperatingCost = () => {
-    const { opCost, fixtCostb } = useContext(MapContext)
-    const [formValuesfc, setFormValuesfc] = useState({ ...fixtCostb });
-
-    const handleInputChangeF = (event) => {
+    const { opCost, fixtCostb, opCostb, setOpCostb } = useContext(MapContext)
+    
+    const handleInputChangeo = (event) => {
         const { name, value } = event.target;
-        setFormValuesfc(prevState => ({ ...prevState, [name]: Number(value) }));
+        setOpCostb(prevState => ({ ...prevState, [name]: Number(value) }));
     };
+   
+
     return (
         <div>
             <Col sm={12} md={12} lg={12} style={{ backgroundColor: "#3c557a", margin: "1%" }} className="rounded">
                 <Container>
                     <Row>
-                        {opCost.map((entry, index) => (
-                            <Col key={entry[0]} sm={4}>
-                                <Form.Group controlId={`form${entry[0]}`} onChange={handleInputChangeF} className='mt-2'>
-                                    <Form.Label style={{ color: "white" }}>{entry[0]}</Form.Label>
-                                    <Form.Control type="number" placeholder={entry[1]} name={entry[0]} className='mb-2' />
-                                </Form.Group>
-                                {(index + 1) % 3 === 0 && <div className="w-100"></div>}
+                        {/* {opCostb.map((list, index) => (
+                            <Col sm={4}>
+                                <Form>
+                                    <Form.Row>
+
+                                    </Form.Row>
+                                </Form>
                             </Col>
+                        ))} */}
+                        {Object.keys(opCostb).map((key, index) => (
+                            <React.Fragment key={key}>
+                                <Col sm={4} className="mb-3">
+                                    <Form.Group onChange={handleInputChangeo}>
+                                        <Form.Label style={{ color: "white" }}>{key}</Form.Label>
+                                        <Form.Control
+                                            type="number"
+                                            value={opCostb[key]}
+                                            name={key}
+                                        />
+                                    </Form.Group>
+                                </Col>
+                                {(index + 1) % 3 === 0 && <div className="w-100"></div>}
+                            </React.Fragment>
                         ))}
                     </Row>
                 </Container>

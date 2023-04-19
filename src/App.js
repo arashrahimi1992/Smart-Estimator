@@ -8,6 +8,7 @@ import { useNavigate, Link } from "react-router-dom";
 import Smart from './Component/Smart'
 import { ToastContainer, toast } from 'react-toastify';
 import SecondPage from './Component/SecondPage'
+import Spinner from './Component/Spinner'
 
 
 
@@ -62,7 +63,7 @@ const App = () => {
         const formData = new FormData();
         formData.append("username", 'admin');
         formData.append("password", 'Tiva@2022#Ca');
-        const { data } = await axios.post(`http://82.115.18.58:8005/token`,formData,{
+        const { data } = await axios.post(`https://82.115.18.58:8005/token`,formData,{
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -97,8 +98,8 @@ const App = () => {
   }
   const createEmail = async (body) => {
     try {
-      console.log(token)
-      const res = await axios.post("http://82.115.18.58:3000/user_email/", body,{
+
+      const res = await axios.post("https://82.115.18.58:3000/user_email/", body,{
         headers: {
           'Authorization': `Bearer ${token.token}`
         }
@@ -118,9 +119,9 @@ const App = () => {
         "area": Number(area),
         "area_unit": selectedUnit
       }
-      console.log(body)
+   
       if (lat != "" && lang != "", email != "", area != "") {
-        const { data } = await axios.post("http://82.115.18.58:3000/main_cat_crops", body,{
+        const { data } = await axios.post("https://82.115.18.58:3000/main_cat_crops", body,{
           headers: {
             'Authorization': `Bearer ${token.token}`
           }
@@ -158,8 +159,8 @@ const App = () => {
         "selected_subcrop":selectedSubcrop,
         
       }
-      console.log(body)
-        const {data} = await axios.post("http://82.115.18.58:3000/get_profit",body,{
+    
+        const {data} = await axios.post("https://82.115.18.58:3000/get_profit",body,{
           headers: {
             'Authorization': `Bearer ${token.token}`
           }
@@ -188,10 +189,10 @@ const App = () => {
         mainCategory,setMainCategory,mainCat,mainCatt,setMainCatt,percentage,setPercentage,subcatCrops,setThirdPart,
      thirdPart,dataKinds,setDataKinds,setselectedSubcrop,selectedSubcrop,getProfit,setProfit,profit,dataExtracFrom,
         opCost,fixCost,yieldPrice,revenue,selectSucat,setFixCost,opCostb,setOpCostb,fixtCostb,yieldPriceb,revenueb,
-        selectSucat,email,agriType,token,setRevenue}} >
+        selectSucat,email,agriType,token,setRevenue,opCostb,setOpCostb,setFixtCostb,setyieldPrice,setyieldPriceb}} >
         <Routes>
           {loading ?
-            <Route path='/maps' element={<Maps />}></Route> : <Route path="/" element={<Maps fetch={fetch} />} />
+            <Route path='/maps' element={<Maps />}></Route> : <Route path="/maps" element={<Maps fetch={fetch} />} />
           }
           <Route path='/' element={<Smart />}></Route>
           <Route path='/secondpage' element={<SecondPage />}></Route>

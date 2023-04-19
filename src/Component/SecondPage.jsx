@@ -2,10 +2,8 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import { useNavigate } from "react-router-dom";
 import { useContext } from 'react';
 import { MapContext } from '../context/MapContext';
-import { useState } from 'react'
 import axios from "axios";
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
@@ -16,32 +14,25 @@ import EstimationsSecondPage from './EstimationsSecondPage'
 
 
 const SecondPage = () => {
-    const { revenue, selectSucat, opCostb, fixtCostb, yieldPriceb, revenueb, email, agriType, token, setRevenue } = useContext(MapContext)
-    const navigate = useNavigate();
-    const [formValuesoc, setFormValuesoc] = useState({ ...opCostb });
-    const [formValuesfc, setFormValuesfc] = useState({ ...fixtCostb });
-    const [formValuesyp, setFormValuesyp] = useState({ ...yieldPriceb });
-    const dsmartpage = () => {
-        navigate("/");
-    }
+    const {  selectSucat, opCostb, fixtCostb, yieldPriceb, revenueb, email, agriType, token, setRevenue } = useContext(MapContext)
+ 
+
+    
     const calculate = async () => {
         const dataa = {
-            "op_costs": formValuesoc,
-            "fixed_costs": formValuesfc,
-            "yield_price": formValuesyp,
+            "op_costs": opCostb,
+            "fixed_costs": fixtCostb,
+            "yield_price": yieldPriceb,
             "revenue": revenueb,
             "email": email,
             "selected_subcrop": selectSucat,
             "agri_type": agriType,
         }
-        console.log(dataa)
-        const { data } = await axios.post("http://82.115.18.58:3000/advance", dataa, {
+        const { data } = await axios.post("https://82.115.18.58:3000/advance", dataa, {
             headers: {
                 'Authorization': `Bearer ${token.token}`
             }
         });
-        console.log(revenue)
-        console.log("arash", data)
         setRevenue(Object.entries(data.revenue))
     }
     return (
